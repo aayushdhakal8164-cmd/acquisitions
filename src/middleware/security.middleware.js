@@ -8,23 +8,39 @@ const securityMiddleware = async (req, res, next) => {
 
     let limit = 5;
 
-    if (role === "admin") {
-      limit = 220;
-    } else if (role === "user") {
-      limit = 100;
+    switch (role) {
+      case "admin":
+        limit = 220;
+        break;
+      case "user":
+        limit = 100;
+        break;
+      default:
+        limit = 5;
+        break;
     }
 
-    const decision = await aj
-      .withRule(
-        slidingWindow({
-          mode: "LIVE",
-          interval: 60,
-          max: limit,
-        })
-      )
-      .protect(req);
+    // Debug information
+    console.log("========== REQUEST ==========");
+    console.log("IP:", req.ip);
+    console.log("Forwarded For:", req.headers["x-forwarded-for"]);
+    console.log("Host:", req.hostname);
+    console.log("Method:", req.method);
+    console.log("Path:", req.path);
+    console.log("=============================");
 
-    console.log({
+    const client = aj.withRule(
+      slidingWindow({
+        mode: "LIVE",
+        interval: 60,
+        max: limit,
+        name: `${role}-rate-limit`,
+      })
+    );
+
+    const decision = await client.protect(req);
+
+    console.log("Arcjet Decision:", {
       denied: decision.isDenied(),
       conclusion: decision.conclusion,
       reason: decision.reason,
@@ -44,6 +60,32 @@ const securityMiddleware = async (req, res, next) => {
         });
       }
 
+      if (decision.reason.isBot()) {
+        logger.warn("Bot detected", {
+          ip: req.ip,
+          role,
+          path: req.path,
+        });
+
+        return res.status(403).json({
+          error: "Forbidden",
+          message: "Bot detected.",
+        });
+      }
+
+      if (decision.reason.isShield()) {
+        logger.warn("Shield blocked request", {
+          ip: req.ip,
+          role,
+          path: req.path,
+        });
+
+        return res.status(403).json({
+          error: "Forbidden",
+          message: "Blocked by Arcjet Shield.",
+        });
+      }
+
       return res.status(403).json({
         error: "Forbidden",
         message: "Request denied.",
@@ -52,7 +94,11 @@ const securityMiddleware = async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.error(err);
+    logger.error("Security middleware error", {
+      error: err.message,
+      stack: err.stack,
+    });
+
     next(err);
   }
 };

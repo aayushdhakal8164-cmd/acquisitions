@@ -8,6 +8,7 @@ import authRoutes from "./route/auth.route.js";
 import securityMiddleware from "./middleware/security.middleware.js";
 
 const app = express();
+app.set("trust proxy", 1); // Trust first proxy (if behind a reverse proxy)
 
 app.use(helmet());
 app.use(cors());
