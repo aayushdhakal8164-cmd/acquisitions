@@ -1,21 +1,8 @@
 services:
-  db:
-    image: neondatabase/neon_local:latest
-
-    ports:
-      - "5432:5432"
-
-    environment:
-      NEON_API_KEY: ${NEON_API_KEY}
-      NEON_PROJECT_ID: ${NEON_PROJECT_ID}
-
   app:
     build: .
 
     container_name: acquisitions-api
-
-    depends_on:
-      - db
 
     env_file:
       - .env.development
@@ -28,3 +15,5 @@ services:
       - /app/node_modules
 
     command: npm run dev
+
+    restart: unless-stopped
