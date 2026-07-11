@@ -5,6 +5,7 @@ import {
   profile,
   getAllUsers,
   deleteUser,
+  updateUser,
 } from "../controllers/auth.controller.js";
 import { authenticate } from "../middleware/auth.middleware.js";
 
@@ -20,6 +21,8 @@ router.post("/sign-out", (req, res) => {
   res.send("POST /api/auth/sign-out response");
 });
 router.get("/users", getAllUsers);
+router.put("/users/:id", updateUser);
 router.delete("/users/:id", deleteUser);
+
 
 export default router;

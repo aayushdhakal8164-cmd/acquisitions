@@ -9,6 +9,7 @@ import {
   signinService,
   getAllUsersService,
   deleteUserService,
+  updateUserService,
 } from "../services/auth.service.js";
 
 // ===================== SIGN UP =====================
@@ -126,5 +127,49 @@ export const getAllUsers = async (req, res, next) => {
   } catch (error) {
     logger.error("Error fetching users", error);
     return next(error);
+  }
+};
+
+export const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const user = await getUserByIdService(Number(id));
+
+    return res.status(200).json({
+      message: "User fetched successfully",
+      user,
+    });
+  } catch (error) {
+    if (error.message === "User not found") {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    next(error);
+  }
+};
+export const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const updatedUser = await updateUserService(
+      Number(id),
+      req.body
+    );
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    if (error.message === "User not found") {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    next(error);
   }
 };

@@ -158,3 +158,49 @@ export const deleteUserService = async (id) => {
 
   return deletedUser;
 };
+export const getUserByIdService = async (id) => {
+  const [user] = await db
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      role: users.role,
+      created_at: users.created_at,
+      updated_at: users.updated_at,
+    })
+    .from(users)
+    .where(eq(users.id, id));
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+};
+export const updateUserService = async (id, data) => {
+  const [existingUser] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, id));
+
+  if (!existingUser) {
+    throw new Error("User not found");
+  }
+
+  const [updatedUser] = await db
+    .update(users)
+    .set({
+      ...data,
+      updated_at: new Date(),
+    })
+    .where(eq(users.id, id))
+    .returning({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      role: users.role,
+      updated_at: users.updated_at,
+    });
+
+  return updatedUser;
+};
