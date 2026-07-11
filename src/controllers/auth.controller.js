@@ -7,6 +7,8 @@ import { formatValidationErrors } from "../utils/format.js";
 import {
   signupService,
   signinService,
+  getAllUsersService,
+  deleteUserService,
 } from "../services/auth.service.js";
 
 // ===================== SIGN UP =====================
@@ -91,4 +93,38 @@ export const profile = (req, res) => {
     message: "Protected route accessed successfully!",
     user: req.user,
   });
+};
+export const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await deleteUserService(Number(id));
+
+    return res.status(200).json({
+      message: "User deleted successfully",
+      user: deletedUser,
+    });
+  } catch (error) {
+    if (error.message === "User not found") {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    next(error);
+  }
+};
+// ===================== GET ALL USERS =====================
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await getAllUsersService();
+
+    return res.status(200).json({
+      message: "Users fetched successfully",
+      users,
+    });
+  } catch (error) {
+    logger.error("Error fetching users", error);
+    return next(error);
+  }
 };

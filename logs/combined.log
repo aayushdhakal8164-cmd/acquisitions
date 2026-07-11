@@ -295,3 +295,12 @@
 {"email":"aayush20@example.com","level":"info","message":"User logged in successfully","service":"user-service","timestamp":"2026-07-10T15:00:51.674Z"}
 {"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:00:51 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 200 315 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:00:51.675Z"}
 {"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:03:49 +0000] \"GET /api/auth/profile HTTP/1.1\" 200 147 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:03:49.125Z"}
+{"level":"info","message":"Hello from the acquisitions service!","service":"user-service","timestamp":"2026-07-10T15:10:53.656Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:10:53 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.128.0 Chrome/148.0.7778.271 Electron/42.5.0 Safari/537.36\"","service":"user-service","timestamp":"2026-07-10T15:10:53.664Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:11:53 +0000] \"GET /api/auth/users HTTP/1.1\" 404 153 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:11:53.529Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:13:44 +0000] \"GET /api/users HTTP/1.1\" 200 27 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:13:44.876Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:16:04 +0000] \"GET /api/users HTTP/1.1\" 200 27 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:16:04.436Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:16:42 +0000] \"GET /api/users HTTP/1.1\" 200 274 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:16:42.585Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:28:57 +0000] \"DELETE /api/auth/users/1 HTTP/1.1\" 200 102 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:28:57.954Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:29:14 +0000] \"GET /api/auth/users HTTP/1.1\" 404 153 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:29:14.712Z"}
+{"level":"info","message":"::ffff:172.20.0.1 - - [10/Jul/2026:15:34:23 +0000] \"GET /api/auth/users HTTP/1.1\" 200 51 \"-\" \"vscode-restclient\"","service":"user-service","timestamp":"2026-07-10T15:34:23.938Z"}

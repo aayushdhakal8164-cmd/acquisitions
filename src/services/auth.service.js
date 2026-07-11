@@ -5,6 +5,8 @@ import { db } from "../config/database.js";
 import { users } from "../models/user.model.js";
 import { eq } from "drizzle-orm";
 
+
+
 // ========================
 // SIGN UP
 // ========================
@@ -139,4 +141,20 @@ export const getAllUsersService = async () => {
   }).from(users);
 
   return usersList;
+};
+export const deleteUserService = async (id) => {
+  const [deletedUser] = await db
+    .delete(users)
+    .where(eq(users.id, id))
+    .returning({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+    });
+
+  if (!deletedUser) {
+    throw new Error("User not found");
+  }
+
+  return deletedUser;
 };

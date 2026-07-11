@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./route/auth.route.js";
 import securityMiddleware from "./middleware/security.middleware.js";
+import userRoutes from "./route/user.route.js";
 
 const app = express();
 app.set("trust proxy", 1); // Trust first proxy (if behind a reverse proxy)
@@ -46,5 +47,6 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 export default app;
