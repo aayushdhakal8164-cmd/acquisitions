@@ -8,6 +8,13 @@
       "when": 1783000081897,
       "tag": "0000_tiny_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783869810334,
+      "tag": "0001_strange_steel_serpent",
+      "breakpoints": true
     }
   ]
 }

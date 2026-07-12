@@ -1,7 +1,1 @@
-PUT http://localhost:3000/api/auth/users/3
-Content-Type: application/json
-
-{
-  "name": "Aayush Updated",
-  "role": "admin"
-}
+POST http://localhost:3000/api/companies
