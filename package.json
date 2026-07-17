@@ -15,7 +15,7 @@
     "#validations/*": "./src/validations/*"
   },
   "scripts": {
-    "dev": "node --watch src/index.js",
+    "dev": "node src/index.js",
     "start": "node src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -49,6 +49,7 @@
     "helmet": "^8.2.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
+    "multer": "^2.2.0",
     "winston": "^3.19.0",
     "zod": "^4.4.3"
   },

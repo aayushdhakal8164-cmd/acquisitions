@@ -15,6 +15,20 @@
       "when": 1783869810334,
       "tag": "0001_strange_steel_serpent",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784042853959,
+      "tag": "0002_unusual_synch",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1784134300267,
+      "tag": "0003_red_genesis",
+      "breakpoints": true
     }
   ]
 }

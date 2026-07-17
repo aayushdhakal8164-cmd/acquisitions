@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./route/auth.route.js";
 import securityMiddleware from "./middleware/security.middleware.js";
 import userRoutes from "./route/user.route.js";
+import companyRoutes from "./route/company.route.js";
+import path from "path";
 
 const app = express();
 app.set("trust proxy", 1); // Trust first proxy (if behind a reverse proxy)
@@ -16,6 +18,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(
+  "/uploads",
+  express.static(path.resolve("src/uploads"))
+);
 
 app.use(
   morgan("combined", {
@@ -48,5 +54,6 @@ app.get("/api", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/companies", companyRoutes);
 
 export default app;
