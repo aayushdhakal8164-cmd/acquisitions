@@ -4,10 +4,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiO
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
-Content-Disposition: form-data; name="logo"; filename="sunflower.jpg"
+Content-Disposition: form-data; name="logo"; filename="logoofcompany.jpg"
 Content-Type: image/jpeg
 
-< ./src/uploads/companies/sunflower.jpg
+< ./src/uploads/companies/logoofcompany.jpg
 --boundary--
 //Admin token
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhYXl1c2gyMEBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NDEzMjE3NiwiZXhwIjoxNzg0NzM2OTc2fQ.KLytM3z-LtgawHMCSo9X9yrw8b85hY_KK-xpwxTmwUc
