@@ -29,6 +29,13 @@
       "when": 1784134300267,
       "tag": "0003_red_genesis",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784562362611,
+      "tag": "0004_large_carnage",
+      "breakpoints": true
     }
   ]
 }

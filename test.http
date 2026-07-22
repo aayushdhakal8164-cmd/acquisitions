@@ -1,16 +1,17 @@
-### Upload Company Logo
-POST http://localhost:3000/api/companies/17/logo
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiOiJhYXl1c2hAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg0MjIzMTMwLCJleHAiOjE3ODQ4Mjc5MzB9.XWigfUAvqQGVqXwDa0b25Bx2G9pgcn-pe0LPKphI84k
-Content-Type: multipart/form-data; boundary=boundary
+curl -X 'POST' \
+  'http://localhost:3000/api/auth/sign-up' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiOiJhYXl1c2hAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg0MjIzMTMwLCJleHAiOjE3ODQ4Mjc5MzB9.XWigfUAvqQGVqXwDa0b25Bx2G9pgcn-pe0LPKphI84k' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "username": "Aayush Dhakal",
+  "email": "aayush123@gmail.com",
+  "password": "aayush@123"
+}'
 
---boundary
-Content-Disposition: form-data; name="logo"; filename="logoofcompany.jpg"
-Content-Type: image/jpeg
-
-< ./src/uploads/companies/logoofcompany.jpg
---boundary--
 //Admin token
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhYXl1c2gyMEBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NDEzMjE3NiwiZXhwIjoxNzg0NzM2OTc2fQ.KLytM3z-LtgawHMCSo9X9yrw8b85hY_KK-xpwxTmwUc
 //John token
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJqb2huMkBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg0MTMzODA5LCJleHAiOjE3ODQ3Mzg2MDl9.lX3R4_GYdDhwyqZWwkJxw95VZNCDIHSRF34ts_hE10E
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiOiJhYXl1c2hAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg0MjIzMTMwLCJleHAiOjE3ODQ4Mjc5MzB9.XWigfUAvqQGVqXwDa0b25Bx2G9pgcn-pe0LPKphI84k
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiYWF5dXNodGVzdDk5OUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3ODQ0Nzk1NzMsImV4cCI6MTc4NTA4NDM3M30.0Yo_xqrvaKRKkOdAZYGXQi9wiU11TT_VJEc2W3FYLes

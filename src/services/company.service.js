@@ -40,17 +40,54 @@ export const getCompanyByIdAndUserService = async (companyId, userId) => {
 export const updateCompanyService = async (id, data) => {
   const [company] = await db
     .update(companies)
-    .set(data)
+    .set({
+  ...data,
+  updated_at: new Date(),
+})
     .where(eq(companies.id, id))
     .returning();
 
   return company;
 };
 export const deleteCompanyService = async (id) => {
+  const [existingCompany] = await db
+    .select()
+    .from(companies)
+    .where(eq(companies.id, id));
+
+  console.log("=================================");
+  console.log("Company:", existingCompany);
+
+  if (!existingCompany) {
+    throw new Error("Company not found");
+  }
+
+  console.log("Logo stored in DB:", existingCompany.logo);
+
+  if (existingCompany.logo) {
+    const logoPath = path.resolve(
+      "src/uploads/companies",
+      existingCompany.logo
+    );
+
+    console.log("Logo path:", logoPath);
+    console.log("File exists?", fs.existsSync(logoPath));
+
+    if (fs.existsSync(logoPath)) {
+      fs.unlinkSync(logoPath);
+      console.log("✅ Logo deleted");
+    } else {
+      console.log("❌ Logo file NOT found");
+    }
+  }
+
   const [company] = await db
     .delete(companies)
     .where(eq(companies.id, id))
     .returning();
+
+  console.log("Company deleted");
+  console.log("=================================");
 
   return company;
 };

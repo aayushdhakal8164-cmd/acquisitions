@@ -8,10 +8,11 @@ import {
   signupService,
   signinService,
   getAllUsersService,
+  getUserByIdService,
   deleteUserService,
   updateUserService,
 } from "../services/auth.service.js";
-
+import { successResponse } from "../utils/apiResponse.js";
 // ===================== SIGN UP =====================
 export const signup = async (req, res, next) => {
   try {
@@ -34,10 +35,12 @@ export const signup = async (req, res, next) => {
 
     logger.info("User registered successfully", { email });
 
-    return res.status(201).json({
-      message: "User registered successfully",
-      user,
-    });
+  return successResponse(
+  res,
+  201,
+  "User registered successfully",
+  user
+);
   } catch (error) {
     logger.error("Error in signup controller", error);
 
@@ -71,10 +74,12 @@ export const signin = async (req, res, next) => {
 
     logger.info("User logged in successfully", { email });
 
-    return res.status(200).json({
-      message: "Login successful",
-      ...result,
-    });
+  return successResponse(
+  res,
+  200,
+  "Login successful",
+  result
+);
   } catch (error) {
     logger.error("Error in signin controller", error);
 
@@ -90,10 +95,12 @@ export const signin = async (req, res, next) => {
 
 // ===================== PROFILE =====================
 export const profile = (req, res) => {
-  res.status(200).json({
-    message: "Protected route accessed successfully!",
-    user: req.user,
-  });
+return successResponse(
+  res,
+  200,
+  "Protected route accessed successfully!",
+  req.user
+);
 };
 export const deleteUser = async (req, res, next) => {
   try {
@@ -101,10 +108,12 @@ export const deleteUser = async (req, res, next) => {
 
     const deletedUser = await deleteUserService(Number(id));
 
-    return res.status(200).json({
-      message: "User deleted successfully",
-      user: deletedUser,
-    });
+   return successResponse(
+  res,
+  200,
+  "User deleted successfully",
+  deletedUser
+);
   } catch (error) {
     if (error.message === "User not found") {
       return res.status(404).json({
@@ -120,10 +129,12 @@ export const getAllUsers = async (req, res, next) => {
   try {
     const users = await getAllUsersService();
 
-    return res.status(200).json({
-      message: "Users fetched successfully",
-      users,
-    });
+   return successResponse(
+  res,
+  200,
+  "Users fetched successfully",
+  users
+);
   } catch (error) {
     logger.error("Error fetching users", error);
     return next(error);
@@ -136,10 +147,12 @@ export const getUserById = async (req, res, next) => {
 
     const user = await getUserByIdService(Number(id));
 
-    return res.status(200).json({
-      message: "User fetched successfully",
-      user,
-    });
+  return successResponse(
+  res,
+  200,
+  "User fetched successfully",
+  user
+);
   } catch (error) {
     if (error.message === "User not found") {
       return res.status(404).json({
@@ -159,10 +172,12 @@ export const updateUser = async (req, res, next) => {
       req.body
     );
 
-    return res.status(200).json({
-      message: "User updated successfully",
-      user: updatedUser,
-    });
+  return successResponse(
+  res,
+  200,
+  "User updated successfully",
+  updatedUser
+);
   } catch (error) {
     if (error.message === "User not found") {
       return res.status(404).json({

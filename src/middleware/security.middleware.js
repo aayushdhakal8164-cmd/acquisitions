@@ -16,7 +16,7 @@ const securityMiddleware = async (req, res, next) => {
         limit = 100;
         break;
       default:
-        limit = 5;
+        limit = 30;
         break;
     }
 

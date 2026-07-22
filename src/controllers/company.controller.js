@@ -7,10 +7,12 @@ import {
   getCompanyByIdAndUserService,
   updateCompanyService,
   deleteCompanyService,
+  getCompanyStatsService,
   getMyCompaniesService,
-  uploadCompanyLogoService
+  uploadCompanyLogoService,
 } from "../services/company.service.js";
-
+import ApiError from "../utils/apiError.js";
+import { successResponse } from "../utils/apiResponse.js";
 
 export const createCompany = async (req, res, next) => {
   try {
@@ -27,10 +29,12 @@ export const createCompany = async (req, res, next) => {
       user_id: req.user.id, // 👈 logged-in user's ID
     });
 
-    return res.status(201).json({
-      message: "Company created successfully",
-      company,
-    });
+    return successResponse(
+  res,
+  201,
+  "Company created successfully",
+  company
+);
   } catch (err) {
     next(err);
   }
@@ -58,17 +62,21 @@ export const getAllCompanies = async (req, res, next) => {
   req.user
 );
 
-    return res.status(200).json({
-      message: "Companies fetched successfully",
-      page,
-      limit,
-      search,
-      country,
-      industry,
-      sort,
-      order,
-      companies,
-    });
+ return successResponse(
+  res,
+  200,
+  "Companies fetched successfully",
+  {
+    page,
+    limit,
+    search,
+    country,
+    industry,
+    sort,
+    order,
+    companies,
+  }
+);
   } catch (err) {
     next(err);
   }
@@ -80,15 +88,15 @@ export const getCompanyById = async (req, res, next) => {
     const company = await getCompanyByIdService(Number(id));
 
     if (!company) {
-      return res.status(404).json({
-        error: "Company not found",
-      });
-    }
+ throw new ApiError(404, "Company not found");
+}
 
-    return res.status(200).json({
-      message: "Company fetched successfully",
-      company,
-    });
+ return successResponse(
+  res,
+  200,
+  "Company fetched successfully",
+  company
+);
   } catch (err) {
     next(err);
   }
@@ -111,20 +119,23 @@ export const updateCompany = async (req, res, next) => {
     );
 
     if (!company) {
-      return res.status(403).json({
-        error: "You are not allowed to modify this company.",
-      });
-    }
+ throw new ApiError(
+    403,
+    "You are not allowed to modify this company."
+);
+}
 
     const updatedCompany = await updateCompanyService(
       Number(id),
       validation.data
     );
 
-    return res.status(200).json({
-      message: "Company updated successfully",
-      company: updatedCompany,
-    });
+ return successResponse(
+  res,
+  200,
+  "Company updated successfully",
+  updatedCompany
+);
   } catch (err) {
     next(err);
   }
@@ -139,17 +150,20 @@ export const deleteCompany = async (req, res, next) => {
     );
 
     if (!company) {
-      return res.status(403).json({
-        error: "You are not allowed to delete this company.",
-      });
-    }
+throw new ApiError(
+    403,
+    "You are not allowed to delete this company."
+);
+}
 
     const deletedCompany = await deleteCompanyService(Number(id));
 
-    return res.status(200).json({
-      message: "Company deleted successfully",
-      company: deletedCompany,
-    });
+ return successResponse(
+  res,
+  200,
+  "Company deleted successfully",
+  deletedCompany
+);
   } catch (err) {
     next(err);
   }
@@ -158,10 +172,12 @@ export const getCompanyStats = async (req, res, next) => {
   try {
     const stats = await getCompanyStatsService();
 
-    return res.status(200).json({
-      message: "Company statistics fetched successfully",
-      stats,
-    });
+return successResponse(
+  res,
+  200,
+  "Company statistics fetched successfully",
+  stats
+);
   } catch (err) {
     next(err);
   }
@@ -170,10 +186,12 @@ export const getMyCompanies = async (req, res, next) => {
   try {
     const companies = await getMyCompaniesService(req.user.id);
 
-    return res.status(200).json({
-      message: "My companies fetched successfully",
-      companies,
-    });
+ return successResponse(
+  res,
+  200,
+  "My companies fetched successfully",
+  companies
+);
   } catch (err) {
     next(err);
   }
@@ -183,20 +201,25 @@ export const uploadCompanyLogo = async (req, res, next) => {
     const { id } = req.params;
 
     if (!req.file) {
-      return res.status(400).json({
-        error: "Please upload an image",
-      });
-    }
+  const error = new Error("Please upload an image");
+  error.statusCode = 400;
+  throw error;
+}
 
     const company = await uploadCompanyLogoService(
       Number(id),
       req.file.filename
     );
 
-    return res.status(200).json({
-      message: "Logo uploaded successfully",
-      company,
-    });
+return successResponse(
+  res,
+  200,
+  "Logo uploaded successfully",
+  {
+    ...company,
+    logoUrl: `${req.protocol}://${req.get("host")}/uploads/companies/${company.logo}`,
+  }
+);
   } catch (err) {
     next(err);
   }

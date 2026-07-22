@@ -1,12 +1,15 @@
 import { getAllUsersService } from "../services/user.service.js";
+import { successResponse } from "../utils/apiResponse.js";
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await getAllUsersService();
 
-    return res.status(200).json({
-      message: "Users fetched successfully",
-      users,
-    });
+return successResponse(
+  res,
+  200,
+  "Users fetched successfully",
+  users
+);
   } catch (error) {
     return next(error);
   }
